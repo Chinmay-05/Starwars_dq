@@ -1,17 +1,13 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[1]:
 
 
 import pandas as pd
+import numpy as np
 
 star_wars = pd.read_csv("star_wars.csv", encoding = 'ISO-8859-1')
-
 star_wars = star_wars[pd.notnull(star_wars['RespondentID'])]
-
-
-# In[2]:
 
 
 yes_no = {"Yes": True, "No": False}
@@ -23,10 +19,6 @@ for c in col:
     star_wars[c] = star_wars[c].map(yes_no)
 
 
-# In[3]:
-
-
-import numpy as np
 
 name_map = {"Star Wars: Episode I  The Phantom Menace": True, np.nan: False,
             "Star Wars: Episode II  Attack of the Clones": True,
@@ -39,18 +31,12 @@ for col in star_wars.columns[3:9]:
     star_wars[col] = star_wars[col].map(name_map)
 
 
-# In[4]:
-
-
 star_wars = star_wars.rename(columns = {"Which of the following Star Wars films have you seen? Please select all that apply.": "seen_1",
         "Unnamed: 4": "seen_2",
         "Unnamed: 5": "seen_3",
         "Unnamed: 6": "seen_4",
         "Unnamed: 7": "seen_5",
         "Unnamed: 8": "seen_6"})
-
-
-# In[5]:
 
 
 star_wars[star_wars.columns[9:15]] = star_wars[star_wars.columns[9:15]].astype("float")
@@ -62,8 +48,6 @@ star_wars = star_wars.rename(columns =
                              
 
 
-# In[6]:
-
 
 rank_mean = star_wars[star_wars.columns[9:15]].mean()
 
@@ -72,23 +56,14 @@ import matplotlib.pyplot as plt
 
 plt.bar(range(6), rank_mean)
 
-
-# In[7]:
-
-
 seen_sum = star_wars[star_wars.columns[3:9]].sum()
 
 plt.bar(range(6), seen_sum)
 
 
-# In[8]:
-
 
 males = star_wars[star_wars["Gender"] == "Male"]
 females = star_wars[star_wars["Gender"] == "Female"]
-
-
-# In[9]:
 
 
 male_rank_mean = males[males.columns[9:15]].mean()
@@ -100,7 +75,6 @@ plt.bar(range(6), female_rank_mean)
 plt.show()
 
 
-# In[10]:
 
 
 male_seen_sum = males[males.columns[3:9]].sum()
@@ -112,7 +86,7 @@ plt.bar(range(6), female_seen_sum)
 plt.show()
 
 
-# In[11]:
+
 
 
 high_school = star_wars[star_wars['Education'] == 'High school degree']
@@ -122,7 +96,7 @@ graduate = star_wars[star_wars['Education'] == 'Graduate degree']
 less_high_school = star_wars[star_wars['Education'] == 'Less than high school degree']
 
 
-# In[15]:
+
 
 
 #Analyzing ranks of movies based on eduction::
@@ -133,8 +107,6 @@ for col in degree_col:
     plt.show()
 
 
-# In[16]:
-
 
 #Analyzing seen moveis on the basis of eductaion:
 
@@ -143,7 +115,7 @@ for col in degree_col:
     plt.show()
 
 
-# In[107]:
+
 
 
 #Cleaning columns 15 to 29 to get information about characters
@@ -159,7 +131,7 @@ star_wars = star_wars.rename(columns = char_map)
 star_wars['Character_1'].value_counts()
 
 
-# In[108]:
+
 
 
 # Most liked character has the highest sum of Very favorably and Somewhat Favorably
@@ -181,13 +153,6 @@ for c in star_wars.columns[15:29]:
 print("Least liked character is",list(least_liked.keys())[list(least_liked.values()).index(max(least_liked.values()))],'with', max(least_liked.values()), "votes")
 
 
-# In[ ]:
-
-
-
-
-
-# In[ ]:
 
 
 
